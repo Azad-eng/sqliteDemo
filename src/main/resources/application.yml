@@ -1,0 +1,11 @@
+# DataSource Config
+spring:
+  datasource:
+    url: jdbc:sqlite::resource:data_efl.db
+    driver-class-name: org.sqlite.JDBC
+    username: root
+    password: test
+# Logger Config
+logging:
+  level:
+    com.azad.samples.mybatisDemo: debug
