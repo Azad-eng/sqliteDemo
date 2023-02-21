@@ -1,24 +1,30 @@
 package com.azad.samples.mybatisDemo.entity;
 
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.annotation.*;
 import lombok.Data;
 
-/**
- * @author: EFL-ryl
- */
+import java.util.Date;
+
+
 @Data
-@TableName("intensityRecord")
+@TableName("intensity_record")
 public class Intensity {
+    //@TableId(type = IdType.AUTO)
     private Long id;
     private String openTime;
     private String closeTime;
     private float time;
     private double intensity;
 
-    @TableField(exist = false)
-    private String ignoreColumn = "ignoreColumn";
+    /**
+     * 创建时间
+     */
+    @TableField(fill = FieldFill.INSERT)
+    private Date createTime;
 
-    @TableField(exist = false)
-    private Integer count;
+    /**
+     * 最后修改时间
+     */
+    @TableField(fill = FieldFill.INSERT_UPDATE)
+    private Date updateTime;
 }
