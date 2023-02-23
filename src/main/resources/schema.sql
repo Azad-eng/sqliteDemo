@@ -4,6 +4,6 @@ create table if not exists intensity_record (
     close_time  VARCHAR(30) NULL,
     time        REAL NULL,
     intensity   FLOAT NULL,
-    create_time TIMESTAMP NULL,
-    update_time TIMESTAMP NULL
+    create_time VARCHAR(30) NOT NULL,
+    update_time VARCHAR(30) NOT NULL
 ) ;
