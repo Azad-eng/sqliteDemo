@@ -7,8 +7,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.util.List;
-
 @SpringBootTest
 public class DemoTest {
     @Autowired
@@ -20,10 +18,10 @@ public class DemoTest {
     @Test
     public void testSelect() {
         System.out.println(("----- selectAll method test ------"));
-        List<Intensity> list = intensityService.list();
+        //List<Intensity> list = intensityService.list();
         //List<Intensity> intensityList = intensityMapper.selectList(null);
         //Assertions.assertEquals(1, intensityList.size());
-        list.forEach(System.out::println);
+        //list.forEach(System.out::println);
         for (int i = 0; i < 5; i++) {
             Intensity intensityEntity = new Intensity();
             intensityEntity.setOpenTime("o" + i + 1);

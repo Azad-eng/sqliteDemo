@@ -9,13 +9,12 @@ import java.util.Date;
 @Data
 @TableName("intensity_record")
 public class Intensity {
-    //@TableId(type = IdType.AUTO)
+    @TableId(type = IdType.AUTO)
     private Long id;
     private String openTime;
     private String closeTime;
     private float time;
     private double intensity;
-
     /**
      * 创建时间
      */
