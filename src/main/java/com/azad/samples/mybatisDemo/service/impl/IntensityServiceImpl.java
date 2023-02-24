@@ -8,4 +8,9 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class IntensityServiceImpl extends ServiceImpl<IntensityMapper, Intensity> implements IntensityService {
+    public static IntensityServiceImpl intensityServiceImpl;
+
+    public IntensityServiceImpl(){
+        intensityServiceImpl = this;
+    }
 }
