@@ -1,5 +1,6 @@
 package com.azad.samples.mybatisDemo.utils;
 
+import com.azad.samples.mybatisDemo.entity.Intensity;
 import com.azad.samples.mybatisDemo.service.IntensityService;
 import com.azad.samples.mybatisDemo.service.impl.IntensityServiceImpl;
 import org.apache.poi.ss.usermodel.Cell;
@@ -13,21 +14,79 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.sql.*;
 import java.util.Date;
+import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class SimpleDb2ExcelExporter {
-    String excelFilePath = "Reviews-export.xlsx";
+    String excelFilePath = "IntensityRecord.xlsx";
 
     public void export() {
         IntensityService intensityService = IntensityServiceImpl.intensityServiceImpl;
-
         XSSFWorkbook workbook = new XSSFWorkbook();
         XSSFSheet sheet = workbook.createSheet("Reviews");
         writeHeaderLine(sheet);
+        List<Intensity> list = intensityService.list();
+        writeDataLines(list, workbook, sheet);
+        try {
+            FileOutputStream outputStream = new FileOutputStream(excelFilePath);
+            workbook.write(outputStream);
+            workbook.close();
+        } catch (IOException e) {
+            System.out.println("File IO error:");
+            e.printStackTrace();
+        }
+    }
 
+    public void exportByJDBC() {
+        String jdbcURL = "jdbc:mysql://localhost:3306/sales";
+        String username = "root";
+        String password = "password";
+        try (Connection connection = DriverManager.getConnection(jdbcURL, username, password)) {
+            String sql = "SELECT * FROM review";
+            Statement statement = connection.createStatement();
+            ResultSet result = statement.executeQuery(sql);
+            XSSFWorkbook workbook = new XSSFWorkbook();
+            XSSFSheet sheet = workbook.createSheet("Reviews");
+            writeHeaderLine(sheet);
+            writeDataLinesByJDBC(result, workbook, sheet);
+            FileOutputStream outputStream = new FileOutputStream(excelFilePath);
+            workbook.write(outputStream);
+            workbook.close();
+            statement.close();
+        } catch (SQLException e) {
+            System.out.println("Datababse error:");
+            e.printStackTrace();
+        } catch (IOException e) {
+            System.out.println("File IO error:");
+            e.printStackTrace();
+        }
+    }
+
+    private void writeHeaderLine(XSSFSheet sheet) {
+        Row headerRow = sheet.createRow(0);
+
+        Cell headerCell = headerRow.createCell(0);
+        headerCell.setCellValue("开启时间");
+
+        headerCell = headerRow.createCell(1);
+        headerCell.setCellValue("关闭时间");
+
+        headerCell = headerRow.createCell(2);
+        headerCell.setCellValue("时间");
+
+        headerCell = headerRow.createCell(3);
+        headerCell.setCellValue("光强");
+
+        headerCell = headerRow.createCell(4);
+        headerCell.setCellValue("创建日期");
+
+        headerCell = headerRow.createCell(5);
+        headerCell.setCellValue("更新日期");
+    }
+
+    private void writeDataLines(List<Intensity> list, XSSFWorkbook workbook, XSSFSheet sheet){
         AtomicInteger rowCount = new AtomicInteger(1);
-
-        intensityService.list().forEach(e -> {
+        list.forEach(e -> {
             Row row = sheet.createRow(rowCount.getAndIncrement());
 
             String openTime = e.getOpenTime();
@@ -61,64 +120,8 @@ public class SimpleDb2ExcelExporter {
             cell.setCellStyle(cellStyle);
             cell.setCellValue(updateTime);
         });
-
-        try {
-            FileOutputStream outputStream = new FileOutputStream(excelFilePath);
-            workbook.write(outputStream);
-            workbook.close();
-        } catch (IOException e) {
-            System.out.println("File IO error:");
-            e.printStackTrace();
-        }
     }
-
-    public void exportByJDBC() {
-        String jdbcURL = "jdbc:mysql://localhost:3306/sales";
-        String username = "root";
-        String password = "password";
-        try (Connection connection = DriverManager.getConnection(jdbcURL, username, password)) {
-            String sql = "SELECT * FROM review";
-            Statement statement = connection.createStatement();
-            ResultSet result = statement.executeQuery(sql);
-            XSSFWorkbook workbook = new XSSFWorkbook();
-            XSSFSheet sheet = workbook.createSheet("Reviews");
-            writeHeaderLine(sheet);
-            writeDataLines(result, workbook, sheet);
-            FileOutputStream outputStream = new FileOutputStream(excelFilePath);
-            workbook.write(outputStream);
-            workbook.close();
-            statement.close();
-        } catch (SQLException e) {
-            System.out.println("Datababse error:");
-            e.printStackTrace();
-        } catch (IOException e) {
-            System.out.println("File IO error:");
-            e.printStackTrace();
-        }
-    }
-
-    private void writeHeaderLine(XSSFSheet sheet) {
-
-        Row headerRow = sheet.createRow(0);
-
-        Cell headerCell = headerRow.createCell(0);
-        headerCell.setCellValue("Course Name");
-
-        headerCell = headerRow.createCell(1);
-        headerCell.setCellValue("Student Name");
-
-        headerCell = headerRow.createCell(2);
-        headerCell.setCellValue("Timestamp");
-
-        headerCell = headerRow.createCell(3);
-        headerCell.setCellValue("Rating");
-
-        headerCell = headerRow.createCell(4);
-        headerCell.setCellValue("Comment");
-    }
-
-
-    private void writeDataLines(ResultSet result, XSSFWorkbook workbook,
+    private void writeDataLinesByJDBC(ResultSet result, XSSFWorkbook workbook,
                                 XSSFSheet sheet) throws SQLException {
         int rowCount = 1;
         while (result.next()) {
