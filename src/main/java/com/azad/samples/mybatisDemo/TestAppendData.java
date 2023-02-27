@@ -10,7 +10,7 @@ import com.azad.samples.mybatisDemo.service.impl.IntensityServiceImpl;
 public class TestAppendData {
 
     public void testAutoFill() {
-        IntensityService intensityService = Application.ac.getBean(IntensityServiceImpl.class);
+        IntensityService intensityService = IntensityServiceImpl.intensityServiceImpl;
         Intensity intensityEntity = new Intensity();
         intensityEntity.setOpenTime("222");
         intensityEntity.setCloseTime("333");
