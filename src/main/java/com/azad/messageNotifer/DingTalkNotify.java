@@ -74,7 +74,7 @@ public class DingTalkNotify {
                 + timestamp + "&sign=" + sign;
         System.out.println("webhook: " + webhook);
 
-        String message = "NEW PUSH IN 6601 !!!"; // 要发送的消息内容
+        String message = "IT'S A TEST. NEW PUSH IN 6601 !!!"; // 要发送的消息内容
 
         try {
             URL url = new URL(webhook);
