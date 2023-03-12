@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>org.example</groupId>
-    <artifactId>dingtalknotify</artifactId>
+    <artifactId>sqliteDemo</artifactId>
     <version>0.0.1</version>
     <parent>
         <groupId>org.springframework.boot</groupId>
@@ -75,8 +75,8 @@
                 <!-- 工程主入口-->
                 <classifier>spring-boot</classifier>
                 <mainClass>
-<!--                    com.azad.samples.mybatisDemo.Application-->
-                    com.azad.messageNotifer.DingTalkNotify
+                    com.azad.samples.mybatisDemo.Application
+<!--                    com.azad.messageNotifer.DingTalkNotify-->
                 </mainClass>
                 <includeSystemScope>true</includeSystemScope>
                 <addResources>false</addResources>
