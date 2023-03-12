@@ -20,13 +20,13 @@ public class Application {
         SpringApplicationBuilder springApplicationBuilder = new SpringApplicationBuilder(Application.class);
         ac = springApplicationBuilder.headless(false).run(args);
         log.info("ac= " + ac);
-        //ac = SpringApplication.run(Application.class, args);
-//        new TestAppendData().testAutoFill();
+//        ac = SpringApplication.run(Application.class, args);
+        new TestAppendData().testAutoFill();
 //        new SimpleDb2ExcelExporter().export();
-        try {
-            new Excel2DbImporter().import2Db();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+//        try {
+//            new Excel2DbImporter().import2Db();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
     }
 }

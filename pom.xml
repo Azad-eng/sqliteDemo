@@ -5,8 +5,8 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>org.example</groupId>
-    <artifactId>sqliteDemo</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <artifactId>dingtalknotify</artifactId>
+    <version>0.0.1</version>
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
@@ -69,9 +69,26 @@
     <build>
         <plugins>
             <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-            </plugin>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-maven-plugin</artifactId>
+            <configuration>
+                <!-- 工程主入口-->
+                <classifier>spring-boot</classifier>
+                <mainClass>
+<!--                    com.azad.samples.mybatisDemo.Application-->
+                    com.azad.messageNotifer.DingTalkNotify
+                </mainClass>
+                <includeSystemScope>true</includeSystemScope>
+                <addResources>false</addResources>
+            </configuration>
+            <executions>
+                <execution>
+                    <goals>
+                        <goal>repackage</goal>
+                    </goals>
+                </execution>
+            </executions>
+        </plugin>
         </plugins>
     </build>
 
